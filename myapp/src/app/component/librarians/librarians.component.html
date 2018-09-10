@@ -1,3 +1,130 @@
-<p>
-  librarians works!
-</p>
+<div class="modal fade" id="modal-id">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Add Librarian</h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <form class="form-horizontal" (submit)="onSubmit(ngForm.value)" #ngForm="ngForm">
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="">First Name</label>
+              <div class="col-md-6">
+                <input class="form-control" type="text" placeholder="First Name"
+                 name="firstname" [(ngModel)]="lib.firstname" >
+              </div>
+            </div>
+            <!-- end first name -->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="">Last Name</label>
+              <div class="col-md-6">
+                <input class="form-control" type="text" placeholder="Last Name" 
+                name="lastname" [(ngModel)]="lib.lastname">
+              </div>
+            </div>
+             <!-- end last name -->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="">Images</label>
+              <div class="col-md-6">
+                <input  type="file" name="images" 
+                [(ngModel)]="lib.images">
+              </div>
+            </div>
+             <!-- end images -->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="">Gender</label>
+              <div class="col-md-6">
+                <label class="radio-inline"><input type="radio"
+                   name="gender" value="1"
+                   [(ngModel)]="gender"
+                   checked>
+                   Male</label>
+                <label class="radio-inline"><input type="radio"
+                   name="gender" value="0"
+                   [(ngModel)]="gender">
+                   FeMale</label>
+              </div>
+            </div>
+             <!-- end gender -->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="">Phone</label>
+              <div class="col-md-6">
+                <input class="form-control" type="text" placeholder="Phone"
+                 name="phone" [(ngModel)]="lib.phone">
+              </div>
+            </div>
+             <!-- end phone -->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="">Status</label>
+              <div class="col-md-6">
+                <label class="radio-inline"><input type="radio"
+                   name="status"  [(ngModel)]="status"
+                    value="true" checked>Active</label>
+                <label class="radio-inline"><input type="radio"
+                   name="status" [(ngModel)]="status"
+                    value="false">Disable</label>
+              </div>
+            </div>
+             <!-- end status -->
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+              <div class="col-sm-6">
+                <input type="email" class="form-control" id="inputEmail3" placeholder="Email"
+                 name="email" [(ngModel)]="lib.email"  >
+              </div>
+            </div>
+             <!-- end email -->
+            <div class="form-group">
+              <div class="col-sm-6 col-sm-offset-2">
+                <button  class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- end div form -->
+      </div>
+      <!-- end body -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="lib-add">
+  <button class="btn btn-success lib" data-toggle="modal" href='#modal-id'>Add Librarian</button>
+</div>
+
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+  <thead>
+    <tr class="text-danger">
+      <th>Number</th>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>Image</th>
+      <th>Gender</th>
+      <th>Phone</th>
+      <th>Status</th>
+      <th>Email</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let lib of listLib; let idx = index">
+      <tr class="my-tr" [ngStyle]="{ color: lib.status ? 'green' : 'black'}">
+        <td>{{ idx + 1 }}</td>
+        <td>{{ lib.firstname }}</td>
+        <td>{{ lib.lastname }}</td>
+        <td>{{ lib.images }}</td>
+        <td>{{ lib.gender === 1 ? 'Male' : 'FeMale' }}</td>
+        <td>{{ lib.phone }}</td>
+        <td>{{ lib.status ? 'Active' : 'Disable' }}</td>
+        <td>{{ lib.email }}</td>
+        <td> <button class=" btn btn-success">Edit</button> </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
