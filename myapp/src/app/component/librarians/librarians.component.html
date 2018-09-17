@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal-id">
+<div #mymodal class="modal fade" id="modal-id">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -7,77 +7,72 @@
       </div>
       <div class="modal-body">
         <div>
-          <form class="form-horizontal" (submit)="onSubmit(ngForm.value)" #ngForm="ngForm">
+          <form class="form-horizontal"  #ngForm="ngForm">
+            <div *ngIf="lib.id != undefined">
+              <div class="form-group">
+                <label class="col-md-2 control-label" for="">ID</label>
+                <div class="col-md-6" >
+                  <input  class="form-control" type="text" value="lib.id" name="id" [(ngModel)]="lib.id">
+                </div>
+              </div>
+            </div>
+            <!-- end id  -->
             <div class="form-group">
               <label class="col-md-2 control-label" for="">First Name</label>
               <div class="col-md-6">
-                <input class="form-control" type="text" placeholder="First Name"
-                 name="firstname" [(ngModel)]="lib.firstname" >
+                <input  class="form-control" type="text" placeholder="First Name" name="firstname" [(ngModel)]="lib.firstName">
               </div>
             </div>
             <!-- end first name -->
             <div class="form-group">
               <label class="col-md-2 control-label" for="">Last Name</label>
               <div class="col-md-6">
-                <input class="form-control" type="text" placeholder="Last Name" 
-                name="lastname" [(ngModel)]="lib.lastname">
+                <input class="form-control" type="text" placeholder="Last Name" name="lastname" [(ngModel)]="lib.lastName">
               </div>
             </div>
-             <!-- end last name -->
+            <!-- end last name -->
             <div class="form-group">
               <label class="col-md-2 control-label" for="">Images</label>
               <div class="col-md-6">
-                <input  type="file" name="images" 
-                [(ngModel)]="lib.images">
+                <input type="file" name="images" [(ngModel)]="lib.images">
               </div>
             </div>
-             <!-- end images -->
+            <!-- end images -->
             <div class="form-group">
               <label class="col-md-2 control-label" for="">Gender</label>
               <div class="col-md-6">
-                <label class="radio-inline"><input type="radio"
-                   name="gender" value="1"
-                   [(ngModel)]="gender"
-                   checked>
-                   Male</label>
-                <label class="radio-inline"><input type="radio"
-                   name="gender" value="0"
-                   [(ngModel)]="gender">
-                   FeMale</label>
+                <label class="radio-inline"><input type="radio" name="gender" [value]="1" [(ngModel)]="lib.gender">
+                  Male</label>
+                <label class="radio-inline"><input type="radio" name="gender" [value]="0" [(ngModel)]="lib.gender" >
+                  FeMale</label>
               </div>
             </div>
-             <!-- end gender -->
+            <!-- end gender -->
             <div class="form-group">
               <label class="col-md-2 control-label" for="">Phone</label>
               <div class="col-md-6">
-                <input class="form-control" type="text" placeholder="Phone"
-                 name="phone" [(ngModel)]="lib.phone">
+                <input class="form-control" type="text" placeholder="Phone" name="phone" [(ngModel)]="lib.phone">
               </div>
             </div>
-             <!-- end phone -->
+            <!-- end phone -->
             <div class="form-group">
               <label class="col-md-2 control-label" for="">Status</label>
               <div class="col-md-6">
-                <label class="radio-inline"><input type="radio"
-                   name="status"  [(ngModel)]="status"
-                    value="true" checked>Active</label>
-                <label class="radio-inline"><input type="radio"
-                   name="status" [(ngModel)]="status"
-                    value="false">Disable</label>
+                <label class="radio-inline"><input type="radio" name="status" [(ngModel)]="lib.status" [value]="true" checked>Active</label>
+                <label class="radio-inline"><input type="radio" name="status" [(ngModel)]="lib.status" [value]="false">Disable</label>
               </div>
             </div>
-             <!-- end status -->
+            <!-- end status -->
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
               <div class="col-sm-6">
-                <input type="email" class="form-control" id="inputEmail3" placeholder="Email"
-                 name="email" [(ngModel)]="lib.email"  >
+                <input type="email" class="form-control" id="inputEmail3" placeholder="Email" name="email" [(ngModel)]="lib.email">
               </div>
             </div>
-             <!-- end email -->
+            <!-- end email -->
             <div class="form-group">
               <div class="col-sm-6 col-sm-offset-2">
-                <button  class="btn btn-primary">Save changes</button>
+                <button type="button" (click)="onSubmit(ngForm)" class="btn btn-primary" data-dismiss="modal" >Save changes</button>
               </div>
             </div>
           </form>
@@ -87,23 +82,22 @@
       <!-- end body -->
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        
       </div>
     </div>
   </div>
 </div>
 
-
 <div class="lib-add">
   <button class="btn btn-success lib" data-toggle="modal" href='#modal-id'>Add Librarian</button>
 </div>
 
+<!-- datatable -->
 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
   <thead>
     <tr class="text-danger">
       <th>Number</th>
-      <th>First name</th>
-      <th>Last name</th>
+      <th>FirstName</th>
+      <th>LastName</th>
       <th>Image</th>
       <th>Gender</th>
       <th>Phone</th>
@@ -116,14 +110,17 @@
     <ng-container *ngFor="let lib of listLib; let idx = index">
       <tr class="my-tr" [ngStyle]="{ color: lib.status ? 'green' : 'black'}">
         <td>{{ idx + 1 }}</td>
-        <td>{{ lib.firstname }}</td>
-        <td>{{ lib.lastname }}</td>
+        <td>{{ lib.firstName }}</td>
+        <td>{{ lib.lastName }}</td>
         <td>{{ lib.images }}</td>
         <td>{{ lib.gender === 1 ? 'Male' : 'FeMale' }}</td>
         <td>{{ lib.phone }}</td>
-        <td>{{ lib.status ? 'Active' : 'Disable' }}</td>
+        <td>
+          <a>{{ lib.status ? 'Active' : 'Disable' }}</a>
+        </td>
         <td>{{ lib.email }}</td>
-        <td> <button class=" btn btn-success">Edit</button> </td>
+        <td> <button class=" btn btn-success" data-toggle="modal" href='#modal-id' (click)="setEdit(idx)">Edit</button>
+        </td>
       </tr>
     </ng-container>
   </tbody>
