@@ -1,3 +1,222 @@
-<p>
-  title works!
-</p>
+<div class="container">
+
+  <button type="button" class="btn btn-info btn-md" data-toggle="modal" href='#modal-id'>
+    <!-- data-toggle="modal" data-target="#myModal" -->
+    +Add New
+  </button>
+
+<!-- modal add -->
+  <div class="modal fade" id="modal-id">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Add new book title</h4>
+        </div>
+        <div class="modal-body">
+          <div>
+            <form class="form-horizontal" #ngForm="ngForm">
+              <!-- tab -->
+              <div role="tabpanel">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                  <li role="presentation" class="active fade in">
+                    <a href="#title" aria-controls="home" role="tab" data-toggle="tab">home</a>
+                  </li>
+                  <li role="presentation">
+                    <a href="#tab" aria-controls="tab" role="tab" data-toggle="tab">tab</a>
+                  </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane active fade in" id="title">
+
+                    <div class="form-group">
+                      <label for="code">Code:</label>
+                      <input type="text" class="form-control" [(ngModel)]="title.code" name="code">
+                    </div>
+                    <!-- end code -->
+                    <div class="form-group">
+                      <label for="titlename">Title Name:</label>
+                      <input type="text" class="form-control" [(ngModel)]="title.name" name="name">
+                    </div>
+                    <!-- end name -->
+                    <div class="form-group">
+                      <label for="Toc">Table of content:</label>
+                      <textarea type="text" class="form-control" rows="3" [(ngModel)]="title.tableOfContent" name="tableOfContent"></textarea>
+                    </div>
+                    <!-- end content -->
+                    <div class="form-group">
+                      <label for="description">Description:</label>
+                      <textarea class="form-control" rows="3" [(ngModel)]="title.description" name="description"></textarea>
+                    </div>
+                    <!-- end des -->
+                    <div class="form-group">
+                      <label for="edition">Edition:</label>
+                      <input type="text" class="form-control" [(ngModel)]="title.edition" name="edition">
+                    </div>
+                    <!-- end edittion -->
+                    <div class="form-group">
+                      <label for="ISBN">ISBN:</label>
+                      <input type="text" class="form-control" [(ngModel)]="title.isbn" name="isbn">
+                    </div>
+                    <!-- isbn -->
+                    <div class="form-group">
+                      <label for="Price">Price:</label>
+                      <input type="text" class="form-control" [(ngModel)]="title.price" name="price">
+                    </div>
+                    <!-- end price -->
+                    <div class="form-group">
+                      <label for="PublishingDate">PublishingDate</label>
+                      <input type="text" class="form-control" [(ngModel)]="title.PublishingDate" name="publishingdate">
+                    </div>
+                    <!-- end date -->
+                    <div class="form-group">
+                      <label for="publisher">Publisher:</label>
+                      <select class="form-control" [(ngModel)]="title.publisherID" name="publisherID">
+                        <ng-container *ngFor="let pub of publishersAPI; let idx = index">
+                          <option [value]="pub.id">{{pub.name}}</option>
+                        </ng-container>
+                      </select>
+                    </div>
+                    <!-- end publisher -->
+                    <div class="form-group">
+                      <label class="control-label" for="language">Language:</label>
+                      <select class="form-control" [(ngModel)]="title.languageID" name="languageID">
+                          <ng-container *ngFor="let lang of languagesAPI; let idx = index">
+                            <option [value]="lang.id">{{lang.name}}</option>
+                          </ng-container>
+                        </select>
+                    </div>
+                    <!-- end lang -->
+                    <div class="form-group">
+                      <a href="#tab" class="btn btn-success" (click)="click($event)">next</a>
+                    </div>
+                  </div>
+                  <!-- form title -->
+                  <div role="tabpanel" class="tab-pane fade" id="tab">
+                    <div class="form-group margin">
+                      <div class="col-md-12">
+                        <label>Authors : </label>
+                      </div>
+                      <div class="col-md-4">
+                        <select name="listauthor" class="form-control" (change)="addAuthorID($event.target.value)">
+                          <ng-container *ngFor="let author of authorsAPI; let idx = index">
+                            <option [value]="author.id" id="{{idx}}">
+                              {{author.fullName}}
+                            </option>
+                          </ng-container>
+                        </select>
+                      </div>
+                      <div class="col-md-6 col-md-offset-2">
+                        <label class="control-label">Author Name:</label>
+                        <ul class="list-group">
+                          <ng-container *ngFor="let au of authorsName; let idx  = index ">
+                            <li>{{au}}
+                              <button style="color:red" class="mybtn" (click)="delAuthorID(idx)">
+                                <div class="mypadding">
+                                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </div>
+                              </button>
+                            </li>
+                          </ng-container>
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- end author -->
+                    <div class="form-group margin">
+                        <div class="col-md-12">
+                          <label>Categories : </label>
+                        </div>
+                        <div class="col-md-4">
+                          <select name="listcategories" class="form-control" (change)="addCategoryID($event.target.value)">
+                            <ng-container *ngFor="let category of categoriesAPI">
+                              <option [value]="category.id">
+                                {{category.name}}
+                              </option>
+                            </ng-container>
+                          </select>
+                        </div>
+                        <div class="col-md-6 col-md-offset-2">
+                          <label class="control-label">Categories Name:</label>
+                          <ul class="list-group">
+                            <ng-container *ngFor="let cate of categoriesName; let idx  = index ">
+                              <li>{{cate}}
+                                <button style="color:red" class="mybtn" (click)="delCategoryID(idx)">
+                                  <div class="mypadding">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                  </div>
+                                </button> 
+                              </li>
+                            </ng-container>
+                          </ul>
+                        </div>
+                      </div>
+                      <!-- end categories -->
+                    <button type="button" (click)="addTitle(ngForm)" class="btn btn-primary" >Save changes</button>
+                  </div>
+                  <!-- authors and categories -->
+                </div>
+                <!-- end div tab-content -->
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- datatable -->
+  <!-- <div class="container">
+  <table datatable [dtTrigger]="dtTrigger" class="row-border hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Code</th>
+        <th>Title Name</th>
+        <th>Table of content</th>
+        <th>Description</th>
+        <th>Edition</th>
+        <th>ISBN</th>
+        <th>Price</th>
+        <th>Categories</th>
+        <th>Publishers</th>
+        <th>Language</th>
+        <th width="120px" >
+          Option
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let title of titles">
+        <tr>
+          <td>{{title.id}}</td>
+          <td>{{title.code}}</td>
+          <td>{{title.name}}</td>
+          <td>{{title.tableofcontent}}</td>
+          <td>{{title.description}}</td>
+          <td>{{title.edition}}</td>
+          <td>{{title.isbn}}</td>
+          <td>{{title.price}}</td>
+          <td>
+            <ng-container *ngFor="let cate of title.categories">
+              <label for="">{{cate}}</label><br>
+            </ng-container>
+          </td>
+          <td>{{title.publisher}}</td>
+          <td>{{title.language}}</td>
+          <td>
+            <button type="button" class="btn btn-primary bnt-md">Edit</button>
+            <button type="button" class="btn btn-danger bnt-md">Delete</button>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div> -->
