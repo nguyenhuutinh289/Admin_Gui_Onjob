@@ -14,9 +14,6 @@ export class LibrariansService {
   }
 
   addLib(lib: Librarian) {
-    // console.log(lib);
-    // {fistname : lib.firstname, lastname : lib.lastname, gender : lib.gender,
-    //   phone : lib.phone, email : lib.email,status : lib.status , images : lib.images}
     this.http.post(this.url, lib)
       .subscribe(data => {
         console.log(data);
@@ -29,16 +26,7 @@ export class LibrariansService {
   }
 
   updateLib(lib : Librarian,id:string){
-    console.log(id);
   return  this.http.put(`${this.url}/${id}`, lib);
-    // .subscribe(data => {
-    //   console.log(data);
-    // }, (error: any) => {
-    //   console.log("---");
-    // }, () => {
-    //   console.log('cập nhật thành công');
-
-    // });
   }
 
 }

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Title } from './../Models/Title';
-import { TitleViewModel } from '../Models/titleViewModel';
+import { TitleViewModel,Title } from '../Models/Title';
 
 
 @Injectable({
@@ -22,14 +21,8 @@ export class TitleService {
       t.code, t.name, t.tableOfContent, t.description, t.edition, t.isbn,
       t.image, t.price, t.publishingDate);
 
-    //console.log(title);
-
-    //let authors = [1, 2, 3];
-    //let categories = [4, 5, 6];
-
     let titleModelView = new TitleViewModel(title, authorsID, categoriesID);
 
-    console.log(titleModelView);
     var x = JSON.stringify(titleModelView);
     console.log(x);
 
@@ -38,10 +31,13 @@ export class TitleService {
         'Content-Type': 'application/json',
       })
     };
-    return this.http.post(this.url, x, httpOptions).subscribe(data => {
-      console.log(data);
-    });
+    // return this.http.post(this.url, x, httpOptions).subscribe(data => {
+    //   console.log(data);
+    // });
 
+  }
+  getTitleViewById(id : number){
+    return this.http.get(`${this.url}/${id}`)
   }
 
 }

@@ -11,5 +11,5 @@ export class AuthorService {
 
   getFullNameAuthor(){
     return this.http.get(`${this.url}/fullname`);
-  }
+  } // đừng quan tâm tới cái này . tự viết api khác mà xài.
 }

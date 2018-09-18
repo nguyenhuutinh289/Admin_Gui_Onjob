@@ -1,7 +1,6 @@
-<div class="container">
 
-  <button type="button" class="btn btn-info btn-md" data-toggle="modal" href='#modal-id'>
-    <!-- data-toggle="modal" data-target="#myModal" -->
+
+  <button type="button" (click)="addClick()" class="btn btn-info btn-md" data-toggle="modal" href='#modal-id'>
     +Add New
   </button>
 
@@ -11,7 +10,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">Add new book title</h4>
+          <h4 class="modal-title">Book Title</h4>
         </div>
         <div class="modal-body">
           <div>
@@ -173,50 +172,31 @@
 
 
   <!-- datatable -->
-  <!-- <div class="container">
-  <table datatable [dtTrigger]="dtTrigger" class="row-border hover">
+  <div class="container">
+  <table datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
     <thead>
       <tr>
         <th>#</th>
-        <th>Code</th>
-        <th>Title Name</th>
-        <th>Table of content</th>
-        <th>Description</th>
-        <th>Edition</th>
-        <th>ISBN</th>
-        <th>Price</th>
-        <th>Categories</th>
-        <th>Publishers</th>
-        <th>Language</th>
-        <th width="120px" >
+        <th>Name</th>
+        <th>Image</th>
+        <th width="300px" >
           Option
         </th>
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngFor="let title of titles">
+      <ng-container *ngFor="let shorttitle of arrShortTitle; let idx = index">
         <tr>
-          <td>{{title.id}}</td>
-          <td>{{title.code}}</td>
-          <td>{{title.name}}</td>
-          <td>{{title.tableofcontent}}</td>
-          <td>{{title.description}}</td>
-          <td>{{title.edition}}</td>
-          <td>{{title.isbn}}</td>
-          <td>{{title.price}}</td>
+          <td>{{idx + 1}}</td>
+          <td>{{shorttitle.name}}</td>
+          <td>{{shorttitle.image}}</td>
           <td>
-            <ng-container *ngFor="let cate of title.categories">
-              <label for="">{{cate}}</label><br>
-            </ng-container>
-          </td>
-          <td>{{title.publisher}}</td>
-          <td>{{title.language}}</td>
-          <td>
-            <button type="button" class="btn btn-primary bnt-md">Edit</button>
-            <button type="button" class="btn btn-danger bnt-md">Delete</button>
+              <button type="button" class="btn btn-success bnt-md" (click)="viewDetail(shorttitle.id)">View Detail</button>
+            <button type="button" class="btn btn-primary bnt-md" data-toggle="modal" href='#modal-id' (click)="editClick(shorttitle.id)" >Edit</button>
+            <button type="button" class="btn btn-danger bnt-md" (click)="delTitle(shorttitle.id)">Delete</button>
           </td>
         </tr>
       </ng-container>
     </tbody>
   </table>
-</div> -->
+</div>

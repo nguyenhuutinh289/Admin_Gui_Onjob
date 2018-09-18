@@ -13,11 +13,19 @@ import { HomeComponent } from './component/home/home.component';
 import { TitleComponent } from './component/title/title.component';
 import { LibrariansComponent } from './component/librarians/librarians.component';
 import { PagenotfoundComponent } from './component/pagenotfound/pagenotfound.component';
+import { CategoriesComponent } from './component/categories/categories.component';
+import { AuthorsComponent } from './component/authors/authors.component';
+import { PublisherComponent } from './component/publisher/publisher.component';
+import { LanguagesComponent } from './component/languages/languages.component';
 
 const routerConfig : Routes = [
   {path: 'home', component : HomeComponent},
   {path: 'title', component : TitleComponent},
   {path: 'librarians', component : LibrariansComponent},
+  {path: 'publishers', component : PublisherComponent},
+  {path: 'authors', component : AuthorsComponent},
+  {path: 'languages', component : LanguagesComponent},
+  {path: 'categories', component : CategoriesComponent},
   {path:'',redirectTo :'/home', pathMatch : "full"},
   { path : '**', component : PagenotfoundComponent }
 ]
@@ -31,7 +39,11 @@ const routerConfig : Routes = [
     HomeComponent,
     TitleComponent,
     LibrariansComponent,
-    PagenotfoundComponent
+    PagenotfoundComponent,
+    CategoriesComponent,
+    AuthorsComponent,
+    PublisherComponent,
+    LanguagesComponent
   ],
   imports: [
     BrowserModule,
