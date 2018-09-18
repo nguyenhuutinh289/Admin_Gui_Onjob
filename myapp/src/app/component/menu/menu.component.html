@@ -28,9 +28,15 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a routerLink='/librarians'><i class="fa fa-home" ></i>Librarians </a>
+                  <li><a routerLink='/title'><i class="fa fa-edit"></i>Titles</a></li>
+                  <li><a routerLink='/librarians'><i class="fa fa-users"></i>Librarians </a></li>
+                  <li><a routerLink='/authors'><i class="fa fa-user-secret"></i>Authors</a>
                   </li>
-                  <li><a routerLink='/title'><i class="fa fa-edit" ></i>Titles</a>
+                  <li><a routerLink='/publishers'><i class="fa fa-bars"></i>Publishers</a>
+                  </li>
+                  <li><a routerLink='/languages'><i class="fa fa-commenting"></i>Languages</a>
+                  </li>
+                  <li><a routerLink='/categories'><i class="fa fa-database"></i>Categories</a>
                   </li>
                 </ul>
               </div>
@@ -57,12 +63,12 @@
 
         <!-- top navigation -->
         <div class="top_nav">
-         <app-top-nav-menu></app-top-nav-menu>
+          <app-top-nav-menu></app-top-nav-menu>
         </div>
 
         <!-- page content -->
         <div class="right_col" role="main">
-         <router-outlet></router-outlet>
+          <router-outlet></router-outlet>
         </div>
         <!-- /page content -->
 

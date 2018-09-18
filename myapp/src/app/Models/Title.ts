@@ -12,7 +12,6 @@ export class Title {
     public languageID: number;
     public image: string;
 
-
     constructor(lang?: number, pub?: number, code?: string, name?: string, toc?: string, des?: string,
         edition?: number, isbn?: string, img?: string, price?: number,
         pubdate?: string) {
@@ -27,5 +26,29 @@ export class Title {
         this.publisherID = pub;
         this.languageID = lang;
         this.image = img;
+    }
+}
+
+export class ShortTitle{
+    
+   id  : number;
+   name : string;
+   image : string;
+  
+   constructor(id? : string, name? : string, image?:string) {
+   }
+    
+}
+
+export class TitleViewModel{
+    title : Title;
+    authors : number[];
+    categories : number[];
+   
+    constructor(_title : Title, _authors : number[],_categories : number[]) {
+
+        this.title = _title;
+        this.authors = _authors;
+        this.categories = _categories;
     }
 }
