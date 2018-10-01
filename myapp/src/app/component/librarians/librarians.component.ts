@@ -37,7 +37,6 @@ export class LibrariansComponent implements OnInit, OnDestroy {
   loadData() {
     this.subcription = this.libService.getAllLib()
       .subscribe((data :Librarian[]) => {
-        // console.log(data);
         this.listLib = data;   
         this.dtTrigger.next();  
         $.fn.dataTable.ext.errMode = 'throw';
@@ -49,13 +48,10 @@ export class LibrariansComponent implements OnInit, OnDestroy {
 
     let form = NgForm.value;
     NgForm.reset();
- 
-    
      let libAdd = new Librarian(form.firstname, form.lastname, JSON.parse(form.gender), form.phone,
        form.email, JSON.parse(form.status), form.images);
        console.log(libAdd);
     if (form.id === undefined) {
-      // console.log('undefined---');
        this.libService.addLib(libAdd);
        this.listLib.unshift(libAdd);
     }

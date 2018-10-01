@@ -125,3 +125,37 @@
     </ng-container>
   </tbody>
 </table>
+
+<!-- <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+  <thead>
+    <tr class="text-danger">
+      <th>Number</th>
+      <th>FirstName</th>
+      <th>LastName</th>
+      <th>Image</th>
+      <th>Gender</th>
+      <th>Phone</th>
+      <th>Status</th>
+      <th>Email</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let lib of listLib; let idx = index">
+      <tr class="my-tr" [ngStyle]="{ color: lib.status ? 'green' : 'black'}">
+        <td>{{ idx + 1 }}</td>
+        <td>{{ lib.firstName }}</td>
+        <td>{{ lib.lastName }}</td>
+        <td>{{ lib.images }}</td>
+        <td>{{ lib.gender === 1 ? 'Male' : 'FeMale' }}</td>
+        <td>{{ lib.phone }}</td>
+        <td>
+          <a>{{ lib.status ? 'Active' : 'Disable' }}</a>
+        </td>
+        <td>{{ lib.email }}</td>
+        <td> <button class=" btn btn-success" data-toggle="modal" href='#modal-id' (click)="setEdit(idx)">Edit</button>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table> -->

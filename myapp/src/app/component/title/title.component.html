@@ -1,202 +1,343 @@
-
-
-  <button type="button" (click)="addClick()" class="btn btn-info btn-md" data-toggle="modal" href='#modal-id'>
-    +Add New
-  </button>
+<button type="button" (click)="addClick()" class="btn btn-info btn-md" data-toggle="modal" href='#modal-id'>
+  +Add New
+</button>
 
 <!-- modal add -->
-  <div class="modal fade" id="modal-id">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">Book Title</h4>
-        </div>
-        <div class="modal-body">
-          <div>
-            <form class="form-horizontal" #ngForm="ngForm">
-              <!-- tab -->
-              <div role="tabpanel">
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs" role="tablist">
-                  <li role="presentation" class="active fade in">
-                    <a href="#title" aria-controls="home" role="tab" data-toggle="tab">home</a>
-                  </li>
-                  <li role="presentation">
-                    <a href="#tab" aria-controls="tab" role="tab" data-toggle="tab">tab</a>
-                  </li>
-                </ul>
-                <!-- Tab panes -->
-                <div class="tab-content">
-                  <div role="tabpanel" class="tab-pane active fade in" id="title">
-
-                    <div class="form-group">
-                      <label for="code">Code:</label>
-                      <input type="text" class="form-control" [(ngModel)]="title.code" name="code">
+<div class="modal fade" id="modal-id">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Book Title</h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <form class="form-horizontal" #ngForm="ngForm">
+            <!-- tab -->
+            <div role="tabpanel">
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active fade in">
+                  <a href="#title" aria-controls="home" role="tab" data-toggle="tab">home</a>
+                </li>
+                <li role="presentation">
+                  <a href="#tab" aria-controls="tab" role="tab" data-toggle="tab">tab</a>
+                </li>
+              </ul>
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active fade in" id="title">
+                  <div class="form-group" hidden>
+                    <label for="code">ID:</label>
+                    <input type="text" class="form-control" [(ngModel)]="title.id" name="id">
+                  </div>
+                  <!-- end id -->
+                  <div class="form-group">
+                    <label for="code">Code:</label>
+                    <input type="text" class="form-control" [(ngModel)]="title.code" name="code" placeholder="Code">
+                  </div>
+                  <!-- end code -->
+                  <div class="form-group">
+                    <label for="titlename">Title Name:</label>
+                    <input type="text" class="form-control" [(ngModel)]="title.name" name="name" placeholder="Name">
+                  </div>
+                  <!-- end name -->
+                  <div class="form-group">
+                    <label for="Toc">Table of content:</label>
+                    <textarea type="text" class="form-control" rows="3"
+                     [(ngModel)]="title.tableOfContent" name="tableOfContent" placeholder="Table Of Content"></textarea>
+                  </div>
+                  <!-- end content -->
+                  <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea class="form-control" rows="3"
+                     [(ngModel)]="title.description" name="description" placeholder="Description"></textarea>
+                  </div>
+                  <!-- end des -->
+                  <div class="form-group">
+                    <label for="edition">Edition:</label>
+                    <input type="text" class="form-control" 
+                    [(ngModel)]="title.edition" name="edition" placeholder="Edition">
+                  </div>
+                  <!-- end edittion -->
+                  <div class="form-group">
+                    <label for="ISBN">ISBN:</label>
+                    <input type="text" class="form-control"
+                    placeholder="ISBN" [(ngModel)]="title.isbn" name="isbn">
+                  </div>
+                  <!-- isbn -->
+                  <div class="form-group">
+                    <label for="Price">Price:</label>
+                    <input type="text"  placeholder="Price" class="form-control" [(ngModel)]="title.price" name="price">
+                  </div>
+                  <!-- end price -->
+                  <div class="form-group">
+                    <label for="PublishingDate">PublishingDate</label>
+                    <!-- <input type="text" class="form-control" [(ngModel)]="title.PublishingDate" name="publishingdate"> -->
+                    <kendo-datepicker id="startDate"
+                    [(value)]="value"
+                    (valueChange)="calc()"
+                   
+                    ></kendo-datepicker>
+                    <!--  [(ngModel)]="title.publishingDate"
+                    name="publishingDate" -->
+                    <!--     -->
+                  </div>
+                  <!-- end date -->
+                  <div class="form-group">
+                    <label for="publisher">Publisher:</label>
+                    <select class="form-control" [(ngModel)]="title.publisherID" name="publisherID">
+                      <ng-container *ngFor="let pub of publishersAPI; let idx = index">
+                        <option [value]="pub.id">{{pub.name}}</option>
+                      </ng-container>
+                    </select>
+                  </div>
+                  <!-- end publisher -->
+                  <div class="form-group">
+                    <label class="control-label" for="language">Language:</label>
+                    <select class="form-control" [(ngModel)]="title.languageID" name="languageID">
+                      <ng-container *ngFor="let lang of languagesAPI; let idx = index">
+                        <option [value]="lang.id">{{lang.name}}</option>
+                      </ng-container>
+                    </select>
+                  </div>
+                  <!-- end lang -->
+                  <div class="form-group">
+                    <a href="#tab" class="btn btn-success" (click)="click($event)">next</a>
+                  </div>
+                </div>
+                <!-- form title -->
+                <div role="tabpanel" class="tab-pane fade" id="tab">
+                  <div class="form-group margin">
+                    <div class="col-md-12">
+                      <label>Authors : </label>
                     </div>
-                    <!-- end code -->
-                    <div class="form-group">
-                      <label for="titlename">Title Name:</label>
-                      <input type="text" class="form-control" [(ngModel)]="title.name" name="name">
-                    </div>
-                    <!-- end name -->
-                    <div class="form-group">
-                      <label for="Toc">Table of content:</label>
-                      <textarea type="text" class="form-control" rows="3" [(ngModel)]="title.tableOfContent" name="tableOfContent"></textarea>
-                    </div>
-                    <!-- end content -->
-                    <div class="form-group">
-                      <label for="description">Description:</label>
-                      <textarea class="form-control" rows="3" [(ngModel)]="title.description" name="description"></textarea>
-                    </div>
-                    <!-- end des -->
-                    <div class="form-group">
-                      <label for="edition">Edition:</label>
-                      <input type="text" class="form-control" [(ngModel)]="title.edition" name="edition">
-                    </div>
-                    <!-- end edittion -->
-                    <div class="form-group">
-                      <label for="ISBN">ISBN:</label>
-                      <input type="text" class="form-control" [(ngModel)]="title.isbn" name="isbn">
-                    </div>
-                    <!-- isbn -->
-                    <div class="form-group">
-                      <label for="Price">Price:</label>
-                      <input type="text" class="form-control" [(ngModel)]="title.price" name="price">
-                    </div>
-                    <!-- end price -->
-                    <div class="form-group">
-                      <label for="PublishingDate">PublishingDate</label>
-                      <input type="text" class="form-control" [(ngModel)]="title.PublishingDate" name="publishingdate">
-                    </div>
-                    <!-- end date -->
-                    <div class="form-group">
-                      <label for="publisher">Publisher:</label>
-                      <select class="form-control" [(ngModel)]="title.publisherID" name="publisherID">
-                        <ng-container *ngFor="let pub of publishersAPI; let idx = index">
-                          <option [value]="pub.id">{{pub.name}}</option>
+                    <div class="col-md-4">
+                      <select name="listauthor" class="form-control" (change)="addAuthorID($event.target.value)">
+                        <ng-container *ngFor="let author of authorsAPI; let idx = index">
+                          <option [value]="author.id" id="{{idx}}">
+                            {{author.fullName}}
+                          </option>
                         </ng-container>
                       </select>
                     </div>
-                    <!-- end publisher -->
-                    <div class="form-group">
-                      <label class="control-label" for="language">Language:</label>
-                      <select class="form-control" [(ngModel)]="title.languageID" name="languageID">
-                          <ng-container *ngFor="let lang of languagesAPI; let idx = index">
-                            <option [value]="lang.id">{{lang.name}}</option>
-                          </ng-container>
-                        </select>
-                    </div>
-                    <!-- end lang -->
-                    <div class="form-group">
-                      <a href="#tab" class="btn btn-success" (click)="click($event)">next</a>
+                    <div class="col-md-6 col-md-offset-2">
+                      <label class="control-label">Author Name:</label>
+                      <ul class="list-group">
+                        <ng-container *ngFor="let au of authorsName; let idx  = index ">
+                          <li>{{au}}
+                            <button style="color:red" class="mybtn" (click)="delAuthorID(idx)">
+                              <div class="mypadding">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                              </div>
+                            </button>
+                          </li>
+                        </ng-container>
+                      </ul>
                     </div>
                   </div>
-                  <!-- form title -->
-                  <div role="tabpanel" class="tab-pane fade" id="tab">
-                    <div class="form-group margin">
-                      <div class="col-md-12">
-                        <label>Authors : </label>
-                      </div>
-                      <div class="col-md-4">
-                        <select name="listauthor" class="form-control" (change)="addAuthorID($event.target.value)">
-                          <ng-container *ngFor="let author of authorsAPI; let idx = index">
-                            <option [value]="author.id" id="{{idx}}">
-                              {{author.fullName}}
-                            </option>
-                          </ng-container>
-                        </select>
-                      </div>
-                      <div class="col-md-6 col-md-offset-2">
-                        <label class="control-label">Author Name:</label>
-                        <ul class="list-group">
-                          <ng-container *ngFor="let au of authorsName; let idx  = index ">
-                            <li>{{au}}
-                              <button style="color:red" class="mybtn" (click)="delAuthorID(idx)">
-                                <div class="mypadding">
-                                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                </div>
-                              </button>
-                            </li>
-                          </ng-container>
-                        </ul>
-                      </div>
+                  <!-- end author -->
+                  <div class="form-group margin">
+                    <div class="col-md-12">
+                      <label>Categories : </label>
                     </div>
-                    <!-- end author -->
-                    <div class="form-group margin">
-                        <div class="col-md-12">
-                          <label>Categories : </label>
-                        </div>
-                        <div class="col-md-4">
-                          <select name="listcategories" class="form-control" (change)="addCategoryID($event.target.value)">
-                            <ng-container *ngFor="let category of categoriesAPI">
-                              <option [value]="category.id">
-                                {{category.name}}
-                              </option>
-                            </ng-container>
-                          </select>
-                        </div>
-                        <div class="col-md-6 col-md-offset-2">
-                          <label class="control-label">Categories Name:</label>
-                          <ul class="list-group">
-                            <ng-container *ngFor="let cate of categoriesName; let idx  = index ">
-                              <li>{{cate}}
-                                <button style="color:red" class="mybtn" (click)="delCategoryID(idx)">
-                                  <div class="mypadding">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                  </div>
-                                </button> 
-                              </li>
-                            </ng-container>
-                          </ul>
-                        </div>
-                      </div>
-                      <!-- end categories -->
-                    <button type="button" (click)="addTitle(ngForm)" class="btn btn-primary" >Save changes</button>
+                    <div class="col-md-4">
+                      <select name="listcategories" class="form-control" (change)="addCategoryID($event.target.value)">
+                        <ng-container *ngFor="let category of categoriesAPI">
+                          <option [value]="category.id">
+                            {{category.name}}
+                          </option>
+                        </ng-container>
+                      </select>
+                    </div>
+                    <div class="col-md-6 col-md-offset-2">
+                      <label class="control-label">Categories Name:</label>
+                      <ul class="list-group">
+                        <ng-container *ngFor="let cate of categoriesName; let idx  = index ">
+                          <li>{{cate}}
+                            <button style="color:red" class="mybtn" (click)="delCategoryID(idx)">
+                              <div class="mypadding">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                              </div>
+                            </button>
+                          </li>
+                        </ng-container>
+                      </ul>
+                    </div>
                   </div>
-                  <!-- authors and categories -->
+                  <!-- end categories -->
+                  <button type="button" (click)="addTitle(ngForm)" data-dismiss="modal" class="btn btn-primary">Save changes</button>
                 </div>
-                <!-- end div tab-content -->
+                <!-- authors and categories -->
               </div>
-            </form>
-          </div>
+              <!-- end div tab-content -->
+            </div>
+          </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-        </div>
       </div>
     </div>
   </div>
+</div>
 
 
 
-  <!-- datatable -->
-  <div class="container">
-  <table datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Name</th>
-        <th>Image</th>
-        <th width="300px" >
-          Option
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let shorttitle of arrShortTitle; let idx = index">
-        <tr>
-          <td>{{idx + 1}}</td>
-          <td>{{shorttitle.name}}</td>
-          <td>{{shorttitle.image}}</td>
-          <td>
-              <button type="button" class="btn btn-success bnt-md" (click)="viewDetail(shorttitle.id)">View Detail</button>
-            <button type="button" class="btn btn-primary bnt-md" data-toggle="modal" href='#modal-id' (click)="editClick(shorttitle.id)" >Edit</button>
-            <button type="button" class="btn btn-danger bnt-md" (click)="delTitle(shorttitle.id)">Delete</button>
-          </td>
-        </tr>
-      </ng-container>
-    </tbody>
-  </table>
+<!-- datatable -->
+<div class="container">
+
+  <kendo-grid [data]="gridView" selectable="true" [pageSize]="pageSize" [skip]="skip" [pageable]="true" [height]="400"
+    (pageChange)="pageChange($event)">
+    <kendo-grid-column [width]="275" field="title.name" title="Name"></kendo-grid-column>
+    <kendo-grid-column [width]="300" title="Image">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <p>Image</p>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column title="Options">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <button type="button" class="btn btn-primary bnt-md" data-toggle="modal" href='#modal-id' (click)="editClick(dataItem.title.id)">Edit</button>
+        <button type="button" class="btn btn-danger bnt-md" (click)="delTitle(dataItem.title.id)">Delete</button>
+      </ng-template>
+    </kendo-grid-column>
+    <ng-template kendoGridDetailTemplate let-dataItem>
+      <div class="container my-border">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="container">
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="tb-top">
+                      <div>
+                        <label for="">Code : <span>{{dataItem.title.code}}</span> </label>
+                      </div>
+                      <div>
+                        <label for="">ISBN : <span>{{dataItem.title.isbn}}</span> </label>
+                      </div>
+                      <div>
+                          <label for="">Edition : <span>{{dataItem.title.edition}}</span> </label>
+                        </div>
+               </div>
+               <div class="left-bottom">
+                    <label for="">TableOfContent : </label>
+                    <textarea name="" id="" rows="5" value="{{dataItem.title.tableOfContent}}">
+                          </textarea>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                <div class="tb-top">
+                    <div>
+                        <label for="">Publisher : <span>{{dataItem.title.languageID}}</span> </label>
+                      </div>
+                      <div>
+                        <label for="">Language : <span>{{dataItem.title.publisherID}}</span> </label>
+                      </div>
+                      <div>
+                          <label for="">PublishingDate : <span>{{dataItem.title.publishingDate}}</span> </label>
+                      </div>
+                </div>
+                  <div class="right-bottom">
+                    <label for="">Description : </label>
+                    <textarea name="" id="" rows="5" value="{{dataItem.title.description}}">
+                    </textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end container -->
+          </div>
+          <div class="col-md-3">
+            <div>
+              <label for="">Categories</label>
+              <ng-container *ngFor= "let i of dataItem.categories">
+                  <p>{{i}}</p>
+             </ng-container>
+            </div>
+          </div>
+          <div class="col-md-3">
+              <div>
+                  <label for="">Authors</label>
+                  <ng-container *ngFor= "let i of dataItem.authors">
+                      <p>{{i}}</p>
+                 </ng-container>
+                </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 btn-add">
+            <button type="button" class="btn btn-success"
+             data-toggle="modal" href='#modal-id-1' (click)="getTitleId(dataItem.title.id)">Add Book</button>
+          </div>
+        </div>
+
+      </div>
+      <!-- end container -->
+      <div>
+      </div>
+    </ng-template>
+  </kendo-grid>
+</div>
+
+
+
+
+<!-- add books -->
+
+<div class="modal fade " id="modal-id-1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Book</h4>
+      </div>
+      <div class="modal-body">
+        <form action="" class="form-horizontal" method="POST" role="form" #ngFormBook="ngForm">
+            <div class="form-group" *ngIf="book.barCode == undefined">
+                <label for="description">Number:</label>
+                <input type="text" class="form-control" [(ngModel)]="book.quantity" name="quantity" placeholder="Number">
+              </div>
+              <!-- end quantity -->
+          <div class="form-group" *ngIf="book.barCode !== undefined">
+            <label for="description">BarCode:</label>
+            <input type="text" class="form-control" [(ngModel)]="book.barCode" name="barCode"  placeholder="BarCode">
+          </div>
+          <!-- end barcode -->
+          <div class="form-group">
+            <label for="edition">Page:</label>
+            <input type="text" [(ngModel)]="book.page" name="page" class="form-control" placeholder="Page">
+          </div>
+              <!-- end page  -->
+              <div class="form-group">
+                  <label for="edition">Shelves:</label>
+                  <input type="text" [(ngModel)]="book.shelveID" name="shelvesID" class="form-control" placeholder="Shelves">
+                </div>
+                    <!-- end page  -->
+              <div class="form-group">
+                  <div >
+                    <label class="radio-inline " for=""> <b>Type</b> </label>
+                    <label class="radio-inline"><input type="radio" name="type" [(ngModel)]="book.type" [value]="false" checked >CopyRight</label>
+                    <label class="radio-inline"><input type="radio" name="type" [(ngModel)]="book.type" [value]="true" >Copy</label>
+                  </div>
+                </div>
+                    <!-- end Type  -->
+              <div class="form-group">
+                <div >
+                  <label class="radio-inline " for=""> <b>Status</b> </label>
+                  <label class="radio-inline"><input type="radio" name="status" [(ngModel)]="book.status" [value]="true" checked >InStock</label>
+                  <label class="radio-inline"><input type="radio" name="status" [(ngModel)]="book.status" [value]="false" >Out Of Stock</label>
+                </div>
+              </div>
+                  <!-- end Status  -->
+        </form> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary"
+         (click)="addBook(ngFormBook.value)"
+          data-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>

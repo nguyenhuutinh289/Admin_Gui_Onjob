@@ -23,6 +23,9 @@
               "src/assets"
             ],
             "styles": [
+              {
+                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
+              },
               "node_modules/datatables.net-dt/css/jquery.dataTables.css",
               "src/styles.css"
             ],
@@ -32,7 +35,7 @@
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "src/assets/vendors/bootstrap/dist/js/bootstrap.min.js",
               "src/assets/build/js/custom.min.js"
-          
+             
             ]
           },
           "configurations": {
@@ -80,11 +83,12 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
+              {
+                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
+              },
               "src/styles.css"
             ],
-            "scripts": [
-             
-            ],
+            "scripts": [],
             "assets": [
               "src/favicon.ico",
               "src/assets"

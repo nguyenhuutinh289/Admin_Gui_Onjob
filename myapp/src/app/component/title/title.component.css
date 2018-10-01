@@ -8,3 +8,13 @@ button.mybtn {
 .form-group.margin {
     margin-top: 15px;
 }
+
+.container.my-border {
+    border-top: solid 0.5px darkgrey;
+}
+.tb-top{
+    height: 150px;
+}
+.col-md-12.btn-add {
+    margin: 20px 0px;
+}

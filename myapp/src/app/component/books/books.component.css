@@ -1,0 +1,13 @@
+kendo-combobox.k-widget.k-combobox.k-header.k-combobox-clearable.ng-untouched.ng-pristine.ng-valid {
+    width: 300px !important;
+}
+kendo-combobox.k-widget.k-combobox.k-header.k-combobox-clearable.ng-valid.ng-dirty.ng-touched {
+    width: 300px !important;
+}
+.my-title{
+    padding: 10px 0;
+}
+
+td.td {
+    width: 150px;
+}

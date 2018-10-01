@@ -1,0 +1,8 @@
+.lib-add{
+    padding: 15px 0px;
+}
+tr.my-tr {
+    /* color: green; */
+    font-size: 15px;
+    font-weight: bold;
+}

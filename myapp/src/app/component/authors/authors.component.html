@@ -1,3 +1,100 @@
-<p>
-  authors works!
-</p>
+<div #mymodal class="modal fade" id="modal-id">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Add Author</h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <form class="form-horizontal"  #ngForm="ngForm">
+            <div *ngIf="lib.id != undefined">
+              <div class="form-group">
+                <label class="col-md-2 control-label" for="">ID</label>
+                <div class="col-md-6" >
+                  <input  class="form-control" type="text" value="lib.id" name="id" [(ngModel)]="lib.id">
+                </div>
+              </div>
+            </div>
+            <!-- end id  -->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="">First Name</label>
+              <div class="col-md-6">
+                <input  class="form-control" type="text" placeholder="First Name" name="firstname" [(ngModel)]="lib.firstName">
+              </div>
+            </div>
+            <!-- end first name -->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="">Last Name</label>
+              <div class="col-md-6">
+                <input class="form-control" type="text" placeholder="Last Name" name="lastname" [(ngModel)]="lib.lastName">
+              </div>
+            </div>
+            <!-- end last name -->
+            
+            <div class="form-group">
+              <div class="col-sm-6 col-sm-offset-2">
+                <button type="button" (click)="onSubmit(ngForm)" class="btn btn-primary" data-dismiss="modal" >Save changes</button>
+              </div>
+              </div>
+      <!-- end body -->
+      </form>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="lib-add">
+  <button class="btn btn-success lib" data-toggle="modal" href='#modal-id'>Add Author</button>
+</div>
+
+<!-- datatable -->
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+  <thead>
+    <tr class="text-danger">
+      <th>Number</th>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let lib of listLib; let idx = index">
+      <tr class="my-tr" [ngStyle]="{ color: lib.status ? 'green' : 'black'}">
+        <td>{{ idx + 1 }}</td>
+        <td>{{ lib.firstName + " " + lib.lastName}}</td>
+        <td> <button class=" btn btn-success" data-toggle="modal" href='#modal-id' (click)="setEdit(idx)">Edit</button>
+        </td>
+        <td>
+          <button class="btn btn-danger lang" data-toggle="modal" href='#modal-delete' (click)="deleteClick(idx)">Delete</button>
+          <div #mymodal class="modal fade" id="modal-delete">
+          <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">Delete</h4>
+            </div>
+            <div class="modal-body">
+              <div>
+                <form class="form-horizontal"  #ngForm="ngForm">
+                  <div *ngIf="lib.id != undefined">
+                    <div class="form-group">
+                      <h5>bạn có muốn xóa?</h5>
+                      <button type="button" class="btn btn-danger bnt-md" (click)="onDeleteLang()" data-dismiss= "modal">Delete</button>
+                      <button type="button" class="btn btn-default" data-dismiss= "modal">Close</button>
+                    </div>
+                  </div>
+          </form>
+          </div>
+          </div>
+          </div>
+          </div>
+        </div></td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
