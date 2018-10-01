@@ -1,8 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+
+import { getDate, addDays } from '@progress/kendo-date-math';
+
 import { TitleService } from '../../Services/title.service';
 import { AuthorViewFullName } from '../../Models/authorViewFullName';
-import { Subscription, Subject } from 'rxjs';
-import { Title, ShortTitle, TitleViewModel } from '../../Models/Title';
+import { Subscription } from 'rxjs';
+import { Title, TitleViewModel, GetFullTitle } from '../../Models/Title';
 import { NgForm } from '@angular/forms';
 import { AuthorService } from '../../Services/author.service';
 import { CategoryService } from '../../Services/category.service';
@@ -11,6 +14,10 @@ import { LanguageView } from '../../Models/languageView';
 import { PublisherView } from '../../Models/publisherView';
 import { PublisherService } from '../../Services/publisher.service';
 import { LanguageService } from '../../Services/language.service';
+import { PageChangeEvent, GridDataResult } from '@progress/kendo-angular-grid';
+import { Book } from '../../Models/book';
+import { BookService } from '../../Services/book.service';
+
 
 
 @Component({
@@ -20,15 +27,42 @@ import { LanguageService } from '../../Services/language.service';
 })
 export class TitleComponent implements OnInit, OnDestroy {
 
+  value: Date = new Date();
+
+  public pageSize = 5;
+  public skip = 0;
+  public gridView: GridDataResult;
+
+  private items: GetFullTitle[];
+
   constructor(private titleService: TitleService,
     private authorService: AuthorService,
     private categoryService: CategoryService,
     private languageService: LanguageService,
-    private publisherService: PublisherService) { }
+    private publisherService: PublisherService,
+    private bookService: BookService) { }
+
+  public pageChange(event: PageChangeEvent): void {
+    this.skip = event.skip;
+    this.loadItems();
+  }
+
+
+  private loadItems(): void {
+    this.subscription = this.titleService.getFullTitle().subscribe((arrayTitle: GetFullTitle[]) => {
+      this.items = arrayTitle;
+      console.log(arrayTitle);
+      this.gridView = {
+        data: this.items.slice(this.skip, this.skip + this.pageSize),
+        total: this.items.length
+      };
+    });
+  }
 
   title = new Title();
+  book = new Book();
 
-  public authorsAPI: AuthorViewFullName[];
+  authorsAPI: AuthorViewFullName[];
   authorsName: string[] = [];
   authorsID: number[] = [];
 
@@ -39,36 +73,25 @@ export class TitleComponent implements OnInit, OnDestroy {
   languagesAPI: LanguageView[];
   publishersAPI: PublisherView[];
 
-  arrShortTitle: ShortTitle[];
+  arrayTitleFull: GetFullTitle[];
 
-  dtTrigger = new Subject();
-  dtOptions: DataTables.Settings = {};
 
-  subscription: Subscription
+  subscriptionT: Subscription
+  subscription: Subscription;
   subscriptionTitle: Subscription;
   subscriptionAuthor: Subscription;
   subscriptionCategory: Subscription;
   subscriptionLanguage: Subscription;
   subscriptionPublisher: Subscription;
 
+  subscriptionBook: Subscription;
+
   ngOnInit(): void {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 5,
-    };
-    this.loadData();
+    this.loadItems();
     this.loadPublisher();
     this.loadLanguage();
     this.loadAuthorFullName();
     this.loadCategoryName();
-  }
-
-  loadData() {
-    this.subscription = this.titleService.getAllShortTitle().subscribe((arrayTitle: ShortTitle[]) => {
-      this.arrShortTitle = arrayTitle;
-      //console.log( this.arrShortTitle);
-      this.dtTrigger.next();
-    });
   }
 
   loadLanguage() {
@@ -95,15 +118,14 @@ export class TitleComponent implements OnInit, OnDestroy {
   } // click chuyển tabs
 
 
-  viewDetail(id: number) {
-
-  }
-
   setEditTitle(listAuthorsId: number[], listCategoriesId: number[], title: Title) {
 
     this.authorsID = listAuthorsId;
     this.categoriesID = listCategoriesId;
     this.title = title;
+
+    this.value = new Date(this.title.publishingDate);
+
     for (const id of listAuthorsId) {
       let auName = this.authorsAPI.find(a => a.id == id).fullName;
       this.authorsName.push(auName);
@@ -114,16 +136,17 @@ export class TitleComponent implements OnInit, OnDestroy {
       this.categoriesName.push(cateName);
     }
 
-
   }
 
-  addClick(){
-
+  addClick() {
+    this.title = new Title();
+    this.value = new Date();
     this.authorsID.length = this.categoriesID.length
-     = this.authorsName.length = this.categoriesName.length = 0;
+      = this.authorsName.length = this.categoriesName.length = 0;
   }
 
   editClick(id: number) {
+    this.addClick();
     this.subscriptionTitle = this.titleService.getTitleViewById(id)
       .subscribe((data: TitleViewModel) => {
         this.setEditTitle(data.authors, data.categories, data.title);
@@ -131,8 +154,18 @@ export class TitleComponent implements OnInit, OnDestroy {
   }
 
   delTitle(id: number) {
+    this.subscriptionTitle = this.titleService.delete(id)
+      .subscribe(data => { },
+        err => console.log("lỗi"),
+        () => {
+          this.loadItems();
+        }
+      );
 
+    //console.log(`"id dc click la : " ${id}`);
   }
+
+
 
   /// -------------- xử lý nhiều  authors cho 1 title  
   //#region    
@@ -140,7 +173,7 @@ export class TitleComponent implements OnInit, OnDestroy {
     this.subscriptionAuthor = this.authorService.getFullNameAuthor()
       .subscribe((data: AuthorViewFullName[]) => {
         this.authorsAPI = data;
-        console.log(data);
+        //  console.log(data);
       });
   } // load danh sách author với fullname
 
@@ -188,14 +221,21 @@ export class TitleComponent implements OnInit, OnDestroy {
   //---------------end xử lý cate
 
 
+  calc(): Date {
+    console.log(this.value);
+    return this.value;
+  }
+
   addTitle(ngForm: NgForm) {
-
     let title: Title = ngForm.value;
-    // console.log(title);
-    // console.log(this.authorsID);
-    // console.log(this.categoriesID);
+    title.publishingDate = this.calc();
+    this.titleService.addTitle(title, this.authorsID, this.categoriesID)
+      .subscribe(e => {
+        this.titleService.getAllShortTitle().subscribe(e => {
+          this.loadItems();
+        });
+      });
 
-      this.titleService.addTitle(title,this.authorsID,this.categoriesID);
   }
 
 
@@ -215,6 +255,29 @@ export class TitleComponent implements OnInit, OnDestroy {
     if (this.subscriptionPublisher) {
       this.subscriptionPublisher.unsubscribe();
     }
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
+  getTitleId(titleId: number) {
+    this.book.titleId = titleId;
+  }
+
+  addBook(ngForm) {
+
+    if (this.book.barCode === undefined)
+      this.book.quantity = ngForm.quantity;
+
+    this.book.page = ngForm.page;
+    this.book.type = ngForm.type;
+    this.book.status = ngForm.status;
+    this.book.shelveID = ngForm.shelvesID;
+
+    this.subscriptionBook = this.bookService.addBook(this.book)
+      .subscribe((data: Book) => {
+        console.log(data);
+      });
+
+  }
 }

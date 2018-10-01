@@ -1,3 +1,94 @@
-<p>
-  languages works!
-</p>
+<div #mymodal class="modal fade" id="modal-id">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Add Language</h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <form class="form-horizontal" #ngForm="ngForm">
+            <div *ngIf="lang.id != undefined">
+              <div class="form-group">
+                <label class="col-md-2 control-label" for="">ID</label>
+                <div class="col-md-6">
+                  <input class="form-control" type="text" value="lang.id" name="id" [(ngModel)]="lang.id">
+                </div>
+              </div>
+            </div>
+            <!-- end id  -->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for=""> Name</label>
+              <div class="col-md-6">
+                <input class="form-control" type="text" placeholder="Name" name="name" [(ngModel)]="lang.name">
+              </div>
+            </div>
+            <!-- end first name -->
+            <div class="form-group">
+              <div class="col-sm-6 col-sm-offset-2">
+                <button type="button" (click)="onSubmit(ngForm)" class="btn btn-primary" data-dismiss="modal">Save
+                  changes</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- end div form -->
+      </div>
+      <!-- end body -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="lang-add">
+  <button class="btn btn-success lang" data-toggle="modal" href='#modal-id'>Add Language</button>
+</div>
+
+<!-- datatable -->
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+  <thead>
+    <tr class="text-danger">
+      <th>Number</th>
+      <th>Language</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let lang of listLang; let idx = index">
+      <tr class="my-tr" [ngStyle]="{ color: lang.status ? 'green' : 'black'}">
+        <td>{{ idx + 1 }}</td>
+        <td>{{ lang.name }}</td>
+        <td> <button class=" btn btn-success" data-toggle="modal" href='#modal-id' (click)="setEdit(idx)">Edit</button></td>
+        <td>
+          <button class="btn btn-danger lang" data-toggle="modal" href='#modal-delete' (click)="onCheckDelete(idx)">Delete</button>
+          <div #mymodal class="modal fade" id="modal-delete">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title">Delete</h4>
+                </div>
+                <div class="modal-body">
+                  <div>
+                    <!-- <form class="form-horizontal" #ngForm="ngForm"> -->
+                      <div *ngIf="lang.id != undefined">
+                        <div class="form-group">
+                          <h5>bạn có muốn xóa?</h5>
+                          <button type="button" class="btn btn-danger bnt-md" (click)="onDeleteLang()" data-dismiss="modal">Delete</button>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    <!-- </form> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>

@@ -7,14 +7,14 @@ export class Title {
     public edition: number;
     public isbn: string;
     public price: number;
-    public publishingDate: string;
+    public publishingDate: Date;
     public publisherID: number;
     public languageID: number;
     public image: string;
 
     constructor(lang?: number, pub?: number, code?: string, name?: string, toc?: string, des?: string,
         edition?: number, isbn?: string, img?: string, price?: number,
-        pubdate?: string) {
+        pubdate?: Date) {
         this.code = code;
         this.name = name;
         this.tableOfContent = toc;
@@ -39,6 +39,17 @@ export class ShortTitle{
    }
     
 }
+
+export class GetFullTitle{
+    
+    title : Title;
+    authors : string[];
+    categories : string[];
+   
+    constructor(title? : Title, authors? : string[], categories?:string[]) {
+    }
+     
+ }
 
 export class TitleViewModel{
     title : Title;

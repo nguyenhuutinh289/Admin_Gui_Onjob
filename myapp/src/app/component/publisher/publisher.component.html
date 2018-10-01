@@ -1,3 +1,118 @@
-<p>
-  publisher works!
-</p>
+<div #mymodal class="modal fade" id="modal-id">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Add Publisher</h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <form class="form-horizontal"  #ngForm="ngForm">
+            <div *ngIf="pub.id != undefined">
+              <div class="form-group">
+                <label class="col-md-2 control-label" for="">ID</label>
+                <div class="col-md-6" >
+                  <input  class="form-control" type="text" value="pub.id" name="id" [(ngModel)]="pub.id">
+                </div>
+              </div>
+            </div>
+            <!-- end id  -->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for=""> Name</label>
+              <div class="col-md-6">
+                <input  class="form-control" type="text" placeholder="Name" name="name" [(ngModel)]="pub.name">
+              </div>
+            </div>
+            <!-- end first name -->
+            <div class="form-group">
+              <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+              <div class="col-sm-6">
+                <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" [(ngModel)]="pub.email">
+              </div>
+            </div>
+            <!-- end email -->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="">Phone</label>
+              <div class="col-md-6">
+                <input class="form-control" type="text" placeholder="Phone" name="phone" [(ngModel)]="pub.phone">
+              </div>
+            </div>
+            <!-- end phone -->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="">Address</label>
+              <div class="col-md-6">
+                <input class="form-control" type="text" placeholder="Address" name="address" [(ngModel)]="pub.address">
+              </div>
+            </div>
+            <!-- end phone -->
+         
+            <div class="form-group">
+              <div class="col-sm-6 col-sm-offset-2">
+                <button type="button" (click)="onSubmit(ngForm)" class="btn btn-primary" data-dismiss="modal" >Save changes</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- end div form -->
+      </div>
+      <!-- end body -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pub-add">
+    <button class="btn btn-success pub" data-toggle="modal" href='#modal-id'>Add Publisher</button>
+  </div>
+  <!-- datatable -->
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+    <thead>
+      <tr class="text-danger">
+        <th>Number</th>
+        <th>PubName</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>  
+    <tbody>
+      <ng-container *ngFor="let pub of listPub; let idx = index">
+        <tr class="my-tr" [ngStyle]="{ color: pub.status ? 'green' : 'black'}">
+          <td>{{ idx + 1 }}</td>
+          <td>{{ pub.name }}</td>
+          <td>{{ pub.email }}</td>
+          <td>{{ pub.phone }}</td>
+          <td>{{ pub.address }}</td>
+          <td> <button class=" btn btn-success" data-toggle="modal" href='#modal-id' (click)="setEdit(idx)">Edit</button></td>
+          <td>
+            <button class="btn btn-danger lang" data-toggle="modal" href='#modal-delete' (click)="deleteClick(idx)">Delete</button>
+            <div #mymodal class="modal fade" id="modal-delete">
+            <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Delete</h4>
+              </div>
+              <div class="modal-body">
+                <div>
+                  <form class="form-horizontal"  #ngForm="ngForm">
+                    <div *ngIf="pub.id != undefined">
+                      <div class="form-group">
+                        <h5>bạn có muốn xóa?</h5>
+                        <button type="button" class="btn btn-danger bnt-md" (click)="onDeleteLang()" data-dismiss= "modal">Delete</button>
+                        <button type="button" class="btn btn-default" data-dismiss= "modal">Close</button>
+                      </div>
+                    </div>
+            </form>
+            </div>
+            </div>
+            </div>
+            </div>
+          </div></td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
